@@ -24,7 +24,7 @@ var ttyParser = portObj.pipe(new Readline({
 }));
 
 // Log serial data
-ttyParser.on('data', function(data){
+portObj.on('data', function(data){
   console.log('Data Returned by the device');
   console.log('--------------------');
   console.log(String(data));
