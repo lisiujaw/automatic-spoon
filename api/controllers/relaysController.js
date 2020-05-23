@@ -14,21 +14,20 @@ exports.read_relay_status = function(req, res) {
             res.json(error);
         }
 
-        // First response
-        ttyIn.once('data', function(data) {});
-
         //Listening for response
-        ttyIn.once('data', function(data) {
-            try {
-                res.status(200);
-                res.json(new RelayStatus(relayId, data));
-            } catch (error) {
-                res.status(500);
-                res.json({
-                    status: "error",
-                    statusCode: 500,
-                    message: error.message
-                  });
+        ttyIn.on('data', function(data) {
+            if (data == 'on' || data == 'off') {
+                try {
+                    res.status(200);
+                    res.json(new RelayStatus(relayId, data));
+                } catch (error) {
+                    res.status(500);
+                    res.json({
+                        status: "error",
+                        statusCode: 500,
+                        message: error.message
+                      });
+                }
             }
         });
     });
