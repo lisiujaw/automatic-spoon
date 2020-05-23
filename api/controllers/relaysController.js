@@ -5,6 +5,8 @@ exports.read_relay_status = function(req, res) {
     var ttyOut = req.app.get('ttyOut');
     var ttyIn = req.app.get('ttyIn');
 
+    ttyIn.removeAllListeners("data");
+
     // Write to tty for status
     ttyOut.write("relay read " + relayId + "\r", function(error, results) {
         if(error) {
@@ -15,7 +17,7 @@ exports.read_relay_status = function(req, res) {
         }
 
         //Listening for response
-        ttyIn.on('data', function(data) {
+        var event = ttyIn.on('data', function(data) {
             if (data == 'on' || data == 'off') {
                 try {
                     res.status(200);
