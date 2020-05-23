@@ -20,7 +20,7 @@ var portObj = new SerialPort(tty, {
 
 // Create parser
 var ttyParser = portObj.pipe(new Readline({
-  delimiter: '\r'
+  delimiter: '\n\r'
 }));
 
 // Log serial data

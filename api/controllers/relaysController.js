@@ -14,6 +14,9 @@ exports.read_relay_status = function(req, res) {
             res.json(error);
         }
 
+        // First response
+        ttyIn.once('data', function(data) {});
+
         //Listening for response
         ttyIn.once('data', function(data) {
             try {
